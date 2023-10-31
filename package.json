@@ -1,6 +1,7 @@
 {
 	"name": "fcc-learn-npm-package-json",
 	"author": "Chris J. Martínez Lara",
+	"description": "Backend Course Repo, and does something awesome",
 	"dependencies": {
 		"express": "^4.14.0"
 	},
