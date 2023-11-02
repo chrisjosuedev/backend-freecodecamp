@@ -3,6 +3,7 @@
 	"author": "Chris J. Martínez Lara",
 	"description": "Backend Course Repo, and does something awesome",
 	"keywords": ["backend-course", "certification", "freecodecamp"],
+	"license": "MIT",
 	"dependencies": {
 		"express": "^4.14.0"
 	},
