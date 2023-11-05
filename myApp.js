@@ -1,5 +1,8 @@
-const express = require('express');
-const app = express();
+const { Router } = require("express");
+const router = Router();
 
-console.log("Hello World");
+router.get("/", (req, res) => {
+    res.sendFile(`${__dirname}/views/index.html`);
+});
 
+module.exports = router;
