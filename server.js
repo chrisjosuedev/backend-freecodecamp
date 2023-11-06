@@ -32,7 +32,7 @@ if (!process.env.DISABLE_XORIGIN) {
 
 /** Middleware executes in all routes, get method, path and ip request */
 app.use((req, res, next) => {
-    bGround.log(`${req.method} ${req.path} - ${req.ip}`);
+    console.log(`${req.method} ${req.path} - ${req.ip}`);
     next();
 })
 
