@@ -30,6 +30,12 @@ if (!process.env.DISABLE_XORIGIN) {
     });
 }
 
+/** Middleware executes in all routes, get method, path and ip request */
+app.use((req, res, next) => {
+    bGround.log(`${req.method} ${req.path} - ${req.ip}`);
+    next();
+})
+
 app.use("/public", express.static(__dirname + "/public"));
 app.use(require("./myApp"));
 
