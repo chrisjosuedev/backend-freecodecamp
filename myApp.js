@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { Router } = require("express");
 const router = Router();
 
@@ -6,8 +7,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/json", (req, res) => {
+    const isUppercase = process.env.MESSAGE_STYLE === "uppercase";
+    const resMessage = "Hello json";
     res.json({
-        message: "Hello json",
+        message: isUppercase ? resMessage.toUpperCase() : resMessage,
     });
 });
 

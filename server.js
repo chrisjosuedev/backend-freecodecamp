@@ -30,7 +30,6 @@ if (!process.env.DISABLE_XORIGIN) {
     });
 }
 
-
 app.use("/public", express.static(__dirname + "/public"));
 app.use(require("./myApp"));
 
