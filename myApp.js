@@ -3,8 +3,6 @@ require("dotenv").config();
 const { Router } = require("express");
 const router = Router();
 
-const { currentTimeRequest } = require("./middlewares/currentTimeRequest");
-
 router.get("/", (req, res) => {
     res.sendFile(`${__dirname}/views/index.html`);
 });
@@ -17,10 +15,17 @@ router.get("/json", (req, res) => {
     });
 });
 
-router.get("/now", currentTimeRequest, (req, res) => {
-    res.json({
-        time: req.time,
-    });
-});
+router.get(
+    "/now",
+    (req, res, next) => {
+        req.time = new Date().toString();
+        next();
+    },
+    (req, res) => {
+        res.json({
+            time: req.time,
+        });
+    }
+);
 
 module.exports = router;
