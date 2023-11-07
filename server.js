@@ -30,7 +30,7 @@ if (!process.env.DISABLE_XORIGIN) {
     });
 }
 
-/** Middleware executes in all routes, get method, path and ip request */
+/** Middleware executes in all routes: method, path and ip request */
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.path} - ${req.ip}`);
     next();
