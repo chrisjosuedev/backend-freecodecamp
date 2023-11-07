@@ -15,17 +15,4 @@ router.get("/json", (req, res) => {
     });
 });
 
-router.get(
-    "/now",
-    function (req, res, next) {
-        req.time = new Date().toString();
-        next();
-    },
-    (req, res) => {
-        res.json({
-            time: req.time,
-        });
-    }
-);
-
 module.exports = router;
