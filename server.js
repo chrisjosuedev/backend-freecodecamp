@@ -30,27 +30,6 @@ if (!process.env.DISABLE_XORIGIN) {
     });
 }
 
-/** ---------- Middlewares ---------------- */
-/** Middleware executes in all routes: method, path and ip request */
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.path} - ${req.ip}`);
-    next();
-});
-app.get(
-    "/now",
-    (req, res, next) => {
-        req.time = new Date().toString();
-        next();
-    },
-    (req, res) => {
-        res.json({
-            time: req.time,
-        });
-    }
-);
-app.use("/public", express.static(__dirname + "/public"));
-app.use(require("./myApp"));
-
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
     bGround.log(`Node is listening on port ${port}...`);
