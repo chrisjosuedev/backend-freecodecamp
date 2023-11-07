@@ -17,7 +17,7 @@ router.get("/json", (req, res) => {
 
 router.get(
     "/now",
-    (req, res, next) => {
+    function (req, res, next) {
         req.time = new Date().toString();
         next();
     },
