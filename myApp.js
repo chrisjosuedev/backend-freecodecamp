@@ -3,6 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+const { getRequestTimestamp } = require("./middlewares/getRequestTimestamp");
+
 /** ---------- Middlewares ---------------- */
 app.use("/public", express.static(__dirname + "/public"));
 
@@ -25,17 +27,11 @@ app.get("/json", (req, res) => {
     });
 });
 
-app.get(
-    "/now",
-    (req, res, next) => {
-        req.time = new Date().toString();
-        next();
-    },
-    (req, res) => {
-        res.json({
-            time: req.time,
-        });
-    }
-);
+/** Route with a Chained Middleware */
+app.get("/now", getRequestTimestamp, (req, res) => {
+    res.json({
+        time: req.time,
+    });
+});
 
 module.exports = app;
