@@ -1,10 +1,18 @@
 require("dotenv").config();
-require('./db/connection');
+require("./db/connection");
 
-const Person = require('./models/PersonSchema');
+const Person = require("./models/PersonSchema");
 
 const createAndSavePerson = (done) => {
-    done(null /*, data*/);
+    const person = new Person({
+        name: "Chris",
+        age: 24,
+        favoriteFoods: ["Baleadas", "Pollo Frito", "Lasagna"],
+    });
+    person.save(function (err, data) {
+        if (err) done(err);
+        done(null, data);
+    });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
