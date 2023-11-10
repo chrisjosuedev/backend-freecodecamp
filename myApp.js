@@ -1,17 +1,7 @@
 require("dotenv").config();
+require('./db/connection');
 
-const mongoose = require("mongoose");
-
-// Connect to DB
-mongoose
-    .connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log("DB Connected!"))
-    .catch((err) => console.log(err));
-
-let Person;
+const Person = require('./models/PersonSchema');
 
 const createAndSavePerson = (done) => {
     done(null /*, data*/);
