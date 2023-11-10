@@ -10,7 +10,7 @@ const createAndSavePerson = (done) => {
         favoriteFoods: ["Baleadas", "Pollo Frito", "Lasagna"],
     });
     person.save(function (err, data) {
-        if (err) done(err);
+        if (err) return done(err);
         done(null, data);
     });
 };
