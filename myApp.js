@@ -3,10 +3,13 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+const bodyParser = require("body-parser");
+
 const { getRequestTimestamp } = require("./middlewares/getRequestTimestamp");
 
 /** ---------- Middlewares ---------------- */
 app.use("/public", express.static(__dirname + "/public"));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 /** Middleware executes in all routes: method, path and ip request */
 app.use((req, res, next) => {
