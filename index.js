@@ -9,6 +9,7 @@ const app = express();
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC
 const cors = require("cors");
+const { validateDate } = require("./middlewares/validateDate");
 app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
@@ -20,8 +21,21 @@ app.get("/", (req, res) => {
 });
 
 // your first API endpoint...
-app.get("/api/hello", (req, res) => {
-    res.json({ greeting: "hello API" });
+app.get("/api/:date?", validateDate, (req, res) => {
+    const { date } = req.params;
+
+    // if date undefined, send current date
+    if (!date) {
+        return res.json({
+            unix: new Date().getTime(),
+            utc: new Date().toUTCString(),
+        });
+    }
+
+    res.json({
+        unix: new Date(date).getTime(),
+        utc: new Date(date).toUTCString(),
+    });
 });
 
 // listen for requests :)
