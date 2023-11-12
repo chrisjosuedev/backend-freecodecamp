@@ -1,16 +1,19 @@
 const validateDate = (req, res, next) => {
     const { date } = req.params;
     if (date) {
-        const parsedDate = !isNaN(date) ? new Date(Number(date)) : new Date(date);
-        // If date is a Number, convert it
-        if (!isNaN(parsedDate.getTime())) {
-            req.params.date = parsedDate;
-            return next();
+        const parsedDate = !isNaN(date)
+            ? new Date(Number(date))
+            : new Date(date);
+
+        if (isNaN(parsedDate.getTime())) {
+            return res.json({
+                error: "Invalid Date",
+            });
         }
+
+        req.params.date = parsedDate;
     }
-    return res.json({
-        error: "Invalid Date",
-    });
+    next();
 };
 
 module.exports = {
