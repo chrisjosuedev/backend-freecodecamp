@@ -19,9 +19,11 @@ const shortUrl = async (req, res) => {
             return res.json(newShortUrl);
         }
 
+        const { original_url, short_url } = urlFound;
+
         res.json({
-            original_url: urlFound.original_url,
-            short_url: urlFound.short_url,
+            original_url,
+            short_url,
         });
     } catch (error) {
         console.log(`Something failed -> ${error}`);
