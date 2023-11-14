@@ -9,7 +9,7 @@ const verifyUrl = async (req, res, next) => {
         // Resolve Hostname
         await resolveDns(hostname);
         
-        next();
+        return next();
     } catch (error) {
         console.error(error);
         return res.json({

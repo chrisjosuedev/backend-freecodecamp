@@ -2,41 +2,27 @@ const UrlSchema = require("../models/UrlSchema");
 
 const shortUrl = async (req, res) => {
     const { url } = req.body;
-    const urlResponse = {
-        original_url: "",
-        short_url: "",
-    };
-
-    /**
-     * TODO:
-     * - Verify if already exists a URL and just return it
-     * - Generate a Short url, save Url and return It
-     */
-
     try {
         const urlFound = await UrlSchema.findOne({
-            originalUrl: url,
+            original_url: url,
         });
 
-        console.log(urlFound);
-
         if (!urlFound) {
-            console.log('nothing found');
-            
-            // create new url
-            /**
-             *
-             *
-             */
+            const newShortUrl = {
+                original_url: url,
+                short_url: new Date().getTime(),
+            };
 
-            urlResponse.original_url = 'new value from urlFound';
-            urlResponse.short_url = 'new value from urlFound';
+            const newUrl = new UrlSchema(newShortUrl);
+            await newUrl.save(newUrl);
+
+            return res.json(newShortUrl);
         }
 
-        urlResponse.original_url = 'new value';
-        urlResponse.short_url = 'new value';
-
-        res.json(urlResponse);
+        res.json({
+            original_url: urlFound.original_url,
+            short_url: urlFound.short_url,
+        });
     } catch (error) {
         console.log(`Something failed -> ${error}`);
         res.json({
@@ -45,11 +31,30 @@ const shortUrl = async (req, res) => {
     }
 };
 
-const getOriginalUrl = (req, res) => {
-    // TODO -> Access to real URL
-    // res.redirect('');
+const getOriginalUrl = async (req, res) => {
+    const { short_url } = req.params;
 
-    res.json({});
+    try {
+        const urlFound = await UrlSchema.findOne({
+            short_url,
+        });
+
+        if (!urlFound) {
+            return res.json({
+                error: "No short URL found for the given input",
+            });
+        }
+
+        const { original_url } = urlFound;
+
+        res.redirect(original_url);
+  
+    } catch (error) {
+        console.log(`Something failed -> ${error}`);
+        res.json({
+            error: `Unexpected error: ${error}`,
+        });
+    }
 };
 
 module.exports = {

@@ -9,7 +9,8 @@ const {
     shortUrl,
     getOriginalUrl,
 } = require("./controllers/urlController.controller");
-const { verifyUrl } = require("./middlewares/verifyUrl");
+
+const { verifyShortId, verifyUrl } = require("./middlewares")
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
@@ -26,7 +27,7 @@ app.get("/", (req, res) => {
 // URL Shortener Endpoint
 
 // Access to Short URL
-app.get("/api/shorturl/:short_url", getOriginalUrl);
+app.get("/api/shorturl/:short_url", verifyShortId, getOriginalUrl);
 
 // Get a new URL
 app.post("/api/shorturl", verifyUrl, shortUrl);
