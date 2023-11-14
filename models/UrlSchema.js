@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const UrlSchema = mongoose.Schema({
-    url: {
+const UrlSchema = new mongoose.Schema({
+    originalUrl: {
         type: String,
         require: true,
         unique: true,

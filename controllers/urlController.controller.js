@@ -1,7 +1,11 @@
 const UrlSchema = require("../models/UrlSchema");
 
-const shortUrl = (req, res) => {
+const shortUrl = async (req, res) => {
     const { url } = req.body;
+    const urlResponse = {
+        original_url: "",
+        short_url: "",
+    };
 
     /**
      * TODO:
@@ -10,14 +14,29 @@ const shortUrl = (req, res) => {
      */
 
     try {
-
-        
-
-
-        res.json({
-            original_url: url,
-            short_url: "im a short url",
+        const urlFound = await UrlSchema.findOne({
+            originalUrl: url,
         });
+
+        console.log(urlFound);
+
+        if (!urlFound) {
+            console.log('nothing found');
+            
+            // create new url
+            /**
+             *
+             *
+             */
+
+            urlResponse.original_url = 'new value from urlFound';
+            urlResponse.short_url = 'new value from urlFound';
+        }
+
+        urlResponse.original_url = 'new value';
+        urlResponse.short_url = 'new value';
+
+        res.json(urlResponse);
     } catch (error) {
         console.log(`Something failed -> ${error}`);
         res.json({
