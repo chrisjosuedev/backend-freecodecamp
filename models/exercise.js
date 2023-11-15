@@ -21,7 +21,6 @@ const ExerciseSchema = new Schema({
 
 ExerciseSchema.methods.toJSON = function () {
     const { __v, ...exercise } = this.toObject();
-    exercise.date = new Date(exercise.date).toDateString()
     return exercise;
 };
 

@@ -1,4 +1,4 @@
-import Exercise from "../models/exercise.js"
+import Exercise from "../models/exercise.js";
 
 export const saveExercise = async (req, res) => {
     const { description, duration, date } = req.body;
@@ -8,10 +8,18 @@ export const saveExercise = async (req, res) => {
             description,
             duration,
             date: !date ? new Date().getTime() : date,
-            username: _id,
+            user: _id,
         };
         const exerciseSaved = await Exercise.create(newExercise);
-        res.status(201).json(exerciseSaved);
+        const populated = await Exercise.findById(exerciseSaved._id).populate("user");
+        
+        res.status(201).json({
+            username: populated.user.username,
+            description: populated.description,
+            duration: populated.duration,
+            date: new Date(populated.date).toDateString(),
+            _id
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({
